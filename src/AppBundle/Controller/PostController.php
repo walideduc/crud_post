@@ -29,7 +29,7 @@ class PostController extends Controller
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted()){
+        if($form->isSubmitted() && $form->isValid()){
             $em = $this->getDoctrine()->getManager();
             $post->setCreatedAt(new \DateTime());
             $em->persist($post);
@@ -43,6 +43,26 @@ class PostController extends Controller
             'posts' => $posts,
             'form' => $form->createView(),
         ));
+    }
+    /**
+     * @Route("/posts/edit/{id}",name="posts.edit")
+     * @Method({"GET","POST"})
+    */
+    public function editAction(Request $request, Post $post)
+    {
+        $form = $this->createForm(PostType::class,$post);
+        $form->add('Modifier',SubmitType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $this->getDoctrine()->getManager()->flush($post);
+            return $this->redirectToRoute('posts.index');
+        }
+
+        return $this->render('AppBundle:Post:edit.html.twig',[
+            'form' => $form->createView(),
+            'post' => $post
+
+        ]);
     }
 
 }

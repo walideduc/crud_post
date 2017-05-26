@@ -6,7 +6,9 @@
 <h1>Welcome to the Post:index page</h1>
     <ul>
         {% for post in posts %}
-            <li>{{ post.name }}</li>
+            <li>{{ post.name }}
+                <a href="{{ path("posts.edit",{id:post.id}) }}"> editer </a>
+            </li>
         {% endfor %}
     </ul>
 
