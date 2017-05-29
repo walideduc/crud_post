@@ -10,4 +10,12 @@ namespace AppBundle\Repository;
  */
 class PostRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllwithCategory(){
+        return $this->createQueryBuilder("p")
+            ->leftJoin("p.category","c")
+            ->addSelect("c")
+            ->orderBy("p.createdAt","Desc")
+            ->getQuery()
+            ->getResult();
+    }
 }

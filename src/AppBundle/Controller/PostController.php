@@ -20,7 +20,7 @@ class PostController extends Controller
     public function indexAction(Request $request)
     {
         $rebository = $this->getDoctrine()->getRepository("AppBundle:Post");
-        $posts = $rebository->findAll();
+        $posts = $rebository->findAllwithCategory();
 
         $post = new Post();
 
